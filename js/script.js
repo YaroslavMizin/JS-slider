@@ -1,21 +1,36 @@
 let images =
-    [{ url: "asset/1.jpg", title: "blue" },
-    { url: "asset/2.jpg", title: "forest" },
-    { url: "asset/3.jpg", title: "ocean" },
-    { url: "asset/4.jpg", title: "cold forest" },];
+    [{ url: "asset/1.jpg"},
+    { url: "asset/2.jpg"},
+    { url: "asset/3.jpg"},
+    { url: "asset/4.jpg"},
+    { url: "https://cdn.pixabay.com/photo/2020/02/16/20/29/nyc-4854718_960_720.jpg"},
+    { url: "https://cdn.pixabay.com/photo/2017/01/06/17/28/road-1958388_960_720.jpg"}
+];
 
 function initSlider(options) {
+    if(!images || !images.length) return;
+
     options = options || {
         titles: false,
-        dot:true,
-    }
+        dot: true,
+        autoplay: true,
+      };
+
     let sliderImages = document.querySelector(".image-slider");
     let sliderButtons = document.querySelector(".buttons");
     let sliderNavigation = document.querySelector(".navigation");
 
     initImages();
     initButtons();
-    initNavigation();
+
+    if (options.dot) {
+        initNavigation();
+      }
+      
+      if (options.autoplay) {
+        initAutoplay();
+      }
+    
 
     function initImages() {
         images.forEach((image, index) => {
@@ -42,22 +57,40 @@ function initSlider(options) {
 
     function initNavigation() {
         images.forEach((image, index) => {
-            let dot = `<label class="dot-item n${index} ${index === 0? "active" : ""}" data-index="${index}"></label>`;
-            sliderNavigation.innerHTML +=dot;
+            let dot = `<label class="dot-item n${index} ${index === 0 ? "active" : ""}" data-index="${index}"></label>`;
+            sliderNavigation.innerHTML += dot;
         });
         sliderNavigation.querySelectorAll(".dot-item").forEach(dot => {
-            dot.addEventListener("click", function() {
+            dot.addEventListener("click", function () {
                 moveSlide(this.dataset.index);
-                sliderNavigation.querySelector(".active").classList.remove("active");
-                this.classList.add("active");
             })
         })
     }
 
     function moveSlide(numb) {
         sliderImages.querySelector(".active").classList.remove("active");
-        sliderImages.querySelector(".n"+numb).classList.add("active");
+        sliderImages.querySelector(".n" + numb).classList.add("active");
+        sliderNavigation.querySelector(".active").classList.remove("active");
+        sliderNavigation.querySelector(".n" + numb).classList.add("active");
     }
+    
+    function initAutoplay() {
+        setInterval(() => {
+          activeSlide = +sliderImages.querySelector(".active").dataset.index;
+          nextSlide = activeSlide === images.length - 1? 0 : activeSlide + 1;
+          moveSlide(nextSlide);
+        }, options.autoplayInterval);
+      }
 }
 
-document.addEventListener("DOMContentLoaded", initSlider);
+
+let slideOptions = {
+    dot: true,
+    titles: false,
+    autoplay: true,
+    autoplayInterval: 5000
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+    initSlider(slideOptions);
+});

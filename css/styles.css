@@ -1,12 +1,16 @@
 body {
     background-color: #303030;
     caret-color: transparent;
+    margin-top: 30px;
 }
 
-
-header, main {
+.container {
     max-width: 1100px;
-    margin: 0 auto 0 auto;
+    margin: auto;
+    background-color: #131313;
+    padding-bottom: 30px;
+    border-radius: 30px;
+    box-shadow: inset 0px 1px 3px white, inset 1px 1px 15px 5px #303030, 0px 1px 50px #131313;
 }
 
 header h1 {
@@ -39,7 +43,7 @@ header h1 {
 .image-slider div {
     width: 1000px;
     height: 660px;
-    box-shadow: 0px 1px 6px white;
+    box-shadow: inset 0px 2px 5px white, 0px 1px 10px black;
     background-size: cover;
     background-position: center center;
     opacity: 0;
@@ -63,10 +67,15 @@ header h1 {
     width: 80px;
     border-radius: 80px;
     border: 0;
-    box-shadow: 0px 1px 6px white;
+    box-shadow: 0px 1px 10px aquamarine;
     margin: 5px;
-    opacity: 20%;
+    opacity: 25%;
     transition: opacity 800ms ease;
+}
+
+.button:hover {
+    box-shadow: inset 0px 3px 5px white, 0px 1px 20px aquamarine;
+    opacity: 70%;
 }
 
 .left {
@@ -79,16 +88,8 @@ header h1 {
     float: right;
 }
 
-.left:hover {
-    opacity: 100%;
-}
-
-.right:hover {
-    opacity: 100%;
-}
-
 .navigation {
-    align-self: stretch;
+    align-self: center;
     bottom: 0;
     display: flex;
     justify-content: center;
@@ -104,6 +105,7 @@ header h1 {
     opacity: 30%;
     transition: opacity 800ms ease;
     box-shadow: 0px 1px 3px white;
+    cursor: pointer;
 }
 
 .dot-item:hover, .dot-item.active{
